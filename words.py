@@ -1,8 +1,17 @@
+import sys
+import guess
 
-print("++")
-print("++ The great guessing game")
-print("++\n")
-print("Current guess: ")
-print("Letters guessed: ")
-print("g = guess, t = tell me, l for a letter, and q to quit")
-print("Enter Option: ")
+
+def menu():
+    mode = sys.argv[1]
+
+    if mode == "play":
+        guess.play_mode()
+    elif mode == "test":
+        guess.test_mode()
+    else:
+        print("Invalid game mode...quitting program...")
+
+
+if __name__ == "__main__":
+    menu()
