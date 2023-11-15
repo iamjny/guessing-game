@@ -39,7 +39,7 @@ class Guess:
             user_input = input("\nEnter Option: ").lower()
 
             if user_input == 'g':
-                guess = input("\nEnter your guess: ")
+                guess = input("\nEnter your guess: ").lower()
                 self.input_guess(guess)
             elif user_input == 't':
                 self.tell_word()
