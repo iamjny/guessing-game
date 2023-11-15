@@ -81,8 +81,15 @@ class Guess:
 
     # When user chooses option 'l', user will be able to guess a letter that might be in the word
     def input_letter(self, letter):
-        if letter not in self.guessed_letters:
-            self.guessed_letters.append(letter)
+        if letter in self.guessed_letters:
+            print("\n@@")
+            print("@@ FEEDBACK: You've already used this letter, silly! Try again!")
+            print("@@\n\n")
+            input("Press Enter to continue...")
+            os.system('clear')
+            return
+
+        self.guessed_letters.append(letter)
 
         if letter in self.random_word and letter not in self.correct_guesses:
             print("\n@@")
@@ -95,12 +102,6 @@ class Guess:
                 if self.random_word[i] == letter:
                     self.current_guess[i] = letter
 
-            input("Press Enter to continue...")
-            os.system('clear')
-        elif letter in self.random_word and letter in self.correct_guesses and letter in self.guessed_letters:
-            print("\n@@")
-            print("@@ FEEDBACK: You've already used this letter, silly! Try again!")
-            print("@@\n\n")
             input("Press Enter to continue...")
             os.system('clear')
         else:
