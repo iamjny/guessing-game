@@ -2,12 +2,14 @@ import random
 
 
 class StringDatabase:
-    pass
+    def __init__(self, filename):
+        self.words = self.load_words(filename)
 
+    # Read and add words to a list
+    def load_words(self, filename):
+        with open(filename, 'r') as file:
+            return [word.strip() for line in file for word in line.split()]
 
-with open('four_letters.txt', 'r') as file:
-    words = [word.strip() for line in file for word in line.split()]
-
-
-def random_word(words_list):
-    return random.choice(words_list)
+    # Generate (random) word from list
+    def random_word(self):
+        return random.choice(self.words)
