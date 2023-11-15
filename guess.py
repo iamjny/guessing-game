@@ -81,6 +81,8 @@ class Guess:
 
     # When user chooses option 'l', user will be able to guess a letter that might be in the word
     def input_letter(self, letter):
+        # If letter input has already been inputted, then the game will
+        # ask user to keep trying to guess
         if letter in self.guessed_letters:
             print("\n@@")
             print("@@ FEEDBACK: You've already used this letter, silly! Try again!")
@@ -91,16 +93,26 @@ class Guess:
 
         self.guessed_letters.append(letter)
 
+        # If user inputs a correct letter, game will congratulate user and
+        # add said letter to correct guesses
         if letter in self.random_word and letter not in self.correct_guesses:
             print("\n@@")
             print("@@ FEEDBACK: Woo hoo, you found 1 letter!")
-            print("@@\n\n")
 
             self.correct_guesses.add(letter)
 
             for i in range(len(self.random_word)):
                 if self.random_word[i] == letter:
                     self.current_guess[i] = letter
+
+            # If user has guessed all correct letters, game will congratulate user
+            # and change word (to start new game)
+            if all(letter in self.correct_guesses for letter in self.random_word):
+                print("@@ FEEDBACK: You also guessed all letters in '" + self.random_word + "'!")
+                print("@@\n\n")
+                self.generate_word()
+            else:
+                print("@@\n\n")
 
             input("Press Enter to continue...")
             os.system('clear')
