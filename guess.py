@@ -50,12 +50,12 @@ class Guess:
             elif user_input == 't':
                 self.tell_word()
                 input("Press Enter to continue...")
-
                 self.game_instance.add_game(
                     self.random_word,
                     "Gave up",
                     self.bad_guess_count,
-                    self.missed_letter_count
+                    self.missed_letter_count,
+                    self.game_instance.calculate_score_t(self.random_word)
                 )
 
                 self.generate_word()
@@ -84,6 +84,7 @@ class Guess:
                 "Success",
                 self.bad_guess_count,
                 self.missed_letter_count
+                ,0
             )
 
             self.generate_word()
@@ -142,6 +143,7 @@ class Guess:
                     "Success",
                     self.bad_guess_count,
                     self.missed_letter_count
+                    ,0
                 )
 
                 self.generate_word()
