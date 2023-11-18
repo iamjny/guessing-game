@@ -1,5 +1,7 @@
 import os
 
+from game import Game
+
 
 class Guess:
     def __init__(self, string_database):
@@ -8,6 +10,10 @@ class Guess:
         self.current_guess = ['-'] * 4
         self.correct_guesses = set()
         self.guessed_letters = []
+
+        self.bad_guess_count = 0
+        self.missed_letter_count = 0
+        self.game_instance = Game()
 
     # Generate new word for when the game is completed and moves on to the next
     def generate_word(self):
@@ -44,13 +50,22 @@ class Guess:
             elif user_input == 't':
                 self.tell_word()
                 input("Press Enter to continue...")
+
+                self.game_instance.add_game(
+                    self.random_word,
+                    "Gave up",
+                    self.bad_guess_count,
+                    self.missed_letter_count
+                )
+
                 self.generate_word()
                 os.system('clear')
             elif user_input == 'l':
                 letter = input("\nEnter a letter: ")
                 self.input_letter(letter)
             elif user_input == 'q':
-                print("Quitting game...")
+                os.system('clear')
+                self.game_instance.print_scores()
                 break
             else:
                 print("\nInvalid option. Please choose again.\n\n")
@@ -63,6 +78,14 @@ class Guess:
             print("\n@@")
             print("@@ FEEDBACK: You're right Einstein!")
             print("@@\n\n")
+
+            self.game_instance.add_game(
+                self.random_word,
+                "Success",
+                self.bad_guess_count,
+                self.missed_letter_count
+            )
+
             self.generate_word()
             input("Press Enter to continue...")
             os.system('clear')
@@ -70,6 +93,9 @@ class Guess:
             print("\n@@")
             print("@@ FEEDBACK: Try again, loser!")
             print("@@\n\n")
+
+            self.bad_guess_count += 1
+
             input("Press Enter to continue...")
             os.system('clear')
 
@@ -110,6 +136,14 @@ class Guess:
             if all(letter in self.correct_guesses for letter in self.random_word):
                 print("@@ FEEDBACK: You also guessed all letters in '" + self.random_word + "'!")
                 print("@@\n\n")
+
+                self.game_instance.add_game(
+                    self.random_word,
+                    "Success",
+                    self.bad_guess_count,
+                    self.missed_letter_count
+                )
+
                 self.generate_word()
             else:
                 print("@@\n\n")
@@ -120,5 +154,8 @@ class Guess:
             print("\n@@")
             print("@@ FEEDBACK: Not a single match, loser!")
             print("@@\n\n")
+
+            self.missed_letter_count += 1
+
             input("Press Enter to continue...")
             os.system('clear')
