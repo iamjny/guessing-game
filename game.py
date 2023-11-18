@@ -12,12 +12,9 @@ class Game:
     def __init__(self):
         self.games = []
 
-    # def add_game(self, word, status, bad_guesses, missed_letters, score):
-    def add_game(self, word, status, bad_guesses, missed_letters):
-        # game_record = {"word": word, "status": status, "bad_guesses": bad_guesses,
-        #                "missed_letters": missed_letters, "score": score}
+    def add_game(self, word, status, bad_guesses, missed_letters, score):
         game_record = {"word": word, "status": status, "bad_guesses": bad_guesses,
-                       "missed_letters": missed_letters}
+                       "missed_letters": missed_letters, "score": score}
         self.games.append(game_record)
 
     def print_scores(self):
@@ -28,10 +25,11 @@ class Game:
         print("----         ----        ------          -----------         --------------          -----")
         for i, game in enumerate(self.games, start=1):
             print(
-                str(i) + "            " + str(game["word"]) + "        " + str(game["status"]) + "         " + str(game[
-                                                                                                                       "bad_guesses"]) + "                   " +
-                str(game["missed_letters"]))
+                str(i) + "            " + str(game["word"]) + "        " + str(game["status"]) + "         " + str(
+                    game["bad_guesses"]) + "                   " +
+                str(game["missed_letters"]) + "                       " + str(game["score"]))
         print("\n")
 
-    def calculate_scores(self):
-        pass
+    def calculate_score_t(self, word):
+        score = -(sum(self.letter_frequencies[letter] for letter in word))
+        return score
