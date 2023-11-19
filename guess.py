@@ -22,6 +22,10 @@ class Guess:
         self.correct_guesses.clear()
         self.guessed_letters.clear()
 
+        # To make sure the next word doesn't contain the same bad_guess_count and missed_letter_count
+        self.bad_guess_count = 0
+        self.missed_letter_count = 0
+
     # Displays the correct play/test mode menu
     def menu(self, mode):
         print("++")
@@ -50,12 +54,14 @@ class Guess:
             elif user_input == 't':
                 self.tell_word()
                 input("Press Enter to continue...")
+
                 self.game_instance.add_game(
                     self.random_word,
                     "Gave up",
                     self.bad_guess_count,
                     self.missed_letter_count,
-                    self.game_instance.calculate_score_t(self.random_word)
+                    self.game_instance.calculate_score(self.current_guess, self.random_word, self.missed_letter_count,
+                                                       self.bad_guess_count, True)
                 )
 
                 self.generate_word()
@@ -83,8 +89,9 @@ class Guess:
                 self.random_word,
                 "Success",
                 self.bad_guess_count,
-                self.missed_letter_count
-                ,0
+                self.missed_letter_count,
+                self.game_instance.calculate_score(self.current_guess, self.random_word, self.missed_letter_count,
+                                                   self.bad_guess_count, False)
             )
 
             self.generate_word()
@@ -130,7 +137,9 @@ class Guess:
 
             for i in range(len(self.random_word)):
                 if self.random_word[i] == letter:
+                    self.current_guess = list(self.current_guess)
                     self.current_guess[i] = letter
+                    self.current_guess = ''.join(self.current_guess)
 
             # If user has guessed all correct letters, game will congratulate user
             # and change word (to start new game)
@@ -142,8 +151,9 @@ class Guess:
                     self.random_word,
                     "Success",
                     self.bad_guess_count,
-                    self.missed_letter_count
-                    ,0
+                    self.missed_letter_count,
+                    self.game_instance.calculate_score(self.current_guess, self.random_word, self.missed_letter_count,
+                                                       self.bad_guess_count, False)
                 )
 
                 self.generate_word()
