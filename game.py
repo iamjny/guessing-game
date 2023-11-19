@@ -69,8 +69,7 @@ class Game:
 
         # Second calculation where you take off 10% for every bad word guesses from
         # the first calculation right above
-        discount_percentage = 0.1
-        discount = discount_percentage * bad_word_guesses
-        calculation_2 = calculation_1 - (calculation_1 * discount)
+        percentage = 0.1 * bad_word_guesses
+        calculation_2 = calculation_1 - (calculation_1 * percentage)
 
         return calculation_2
