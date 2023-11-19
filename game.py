@@ -36,7 +36,9 @@ class Game:
                     str(i) + "            " + str(game["word"]) + "        " + str(game["status"]) + "         " + str(
                         game["bad_guesses"]) + "                   " +
                     str(game["missed_letters"]) + "                       " + str(game["score"]))
-            print("\n")
+
+            final_score = sum(game["score"] for game in self.games)
+            print("\nFinal Score: ", round(final_score, 2))
 
     def calculate_score(self, guess_word, real_word, bad_letter_guesses, bad_word_guesses, give_up=False):
         if give_up:
