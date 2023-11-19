@@ -60,8 +60,9 @@ class Guess:
                     "Gave up",
                     self.bad_guess_count,
                     self.missed_letter_count,
-                    self.game_instance.calculate_score(self.current_guess, self.random_word, self.missed_letter_count,
-                                                       self.bad_guess_count, True)
+                    round(self.game_instance.calculate_score(self.current_guess, self.random_word,
+                                                             self.missed_letter_count,
+                                                             self.bad_guess_count, True), 2)
                 )
 
                 self.generate_word()
@@ -80,6 +81,15 @@ class Guess:
 
     # When user chooses option 'g', user will be able to guess the word
     def input_guess(self, guess):
+        # If user clicks the Enter button (on the keyboard)
+        if not guess:
+            print("\n@@")
+            print("@@ FEEDBACK: You didn't enter a guess! Try again.")
+            print("@@\n\n")
+            input("Press Enter to continue...")
+            os.system('clear')
+            return
+
         if guess == self.random_word:
             print("\n@@")
             print("@@ FEEDBACK: You're right Einstein!")
@@ -90,8 +100,8 @@ class Guess:
                 "Success",
                 self.bad_guess_count,
                 self.missed_letter_count,
-                self.game_instance.calculate_score(self.current_guess, self.random_word, self.missed_letter_count,
-                                                   self.bad_guess_count, False)
+                round(self.game_instance.calculate_score(self.current_guess, self.random_word, self.missed_letter_count,
+                                                         self.bad_guess_count, False), 2)
             )
 
             self.generate_word()
@@ -115,6 +125,15 @@ class Guess:
 
     # When user chooses option 'l', user will be able to guess a letter that might be in the word
     def input_letter(self, letter):
+        # If user clicks the Enter button (on the keyboard)
+        if not letter:
+            print("\n@@")
+            print("@@ FEEDBACK: You didn't enter a letter! Try again.")
+            print("@@\n\n")
+            input("Press Enter to continue...")
+            os.system('clear')
+            return
+
         # If letter input has already been inputted, then the game will
         # ask user to keep trying to guess
         if letter in self.guessed_letters:
@@ -152,8 +171,9 @@ class Guess:
                     "Success",
                     self.bad_guess_count,
                     self.missed_letter_count,
-                    self.game_instance.calculate_score(self.current_guess, self.random_word, self.missed_letter_count,
-                                                       self.bad_guess_count, False)
+                    round(self.game_instance.calculate_score(self.current_guess, self.random_word,
+                                                             self.missed_letter_count,
+                                                             self.bad_guess_count, False), 2)
                 )
 
                 self.generate_word()
